@@ -118,5 +118,5 @@ sudo docker compose up -d --build
 
 ## 6. 향후 과제 (SSL 적용)
 현재는 HTTP(80)로 배포됩니다. 운영 환경을 위해서는 SSL(HTTPS) 적용이 필요합니다.
-1.  도메인을 구매하여 `34.64.150.15`로 A 레코드 연결.
+1.  도메인을 구매하여 `robinrag.duckdns.org`로 A 레코드 연결.
 2.  Nginx 컨테이너 설정에 Certbot을 추가하거나, 앞단에 Nginx Proxy Manager 컨테이너를 두어 Let's Encrypt 인증서를 발급받는 것을 권장합니다.
