@@ -6,7 +6,7 @@
 - **GCP 프로젝트 ID**: `project-e063da80-f7b1-4dbd-bba`
 - **리전 (Region)**: `asia-northeast3` (서울)
 - **인스턴스 이름**: `antigravity-server`
-- **외부 IP 주소 (Static IP)**: `34.64.150.15`
+- **외부 IP 주소 (Static IP)**: `robinrag.duckdns.org`
 - **계정**: `barcornsuck@gmail.com`
 
 ## 2. 아키텍처 개요 (Architecture)
@@ -75,7 +75,7 @@ VM 내부에서 실행하는 명령어입니다.
     # 실제 운영용 비밀 키를 생성하여 입력하세요.
     SESSION_SECRET="<강력한_랜덤_문자열>"
     # 클라이언트 URL은 생성한 고정 IP를 사용합니다.
-    CLIENT_URL="http://34.64.150.15"
+    CLIENT_URL="http://robinrag.duckdns.org"
     ```
 
 2.  **LLM Service 환경 변수** (`llm_service/.env`)
@@ -89,7 +89,7 @@ VM 내부에서 실행하는 명령어입니다.
     # 중요: Server의 SESSION_SECRET과 정확히 일치해야 합니다.
     JWT_SECRET="<SESSION_SECRET과_동일한_값>"
     # CORS 허용 출처 설정
-    ALLOWED_ORIGINS="http://34.64.150.15,http://localhost"
+    ALLOWED_ORIGINS="http://robinrag.duckdns.org,http://localhost"
     ```
 
 ### 단계 4: 서비스 빌드 및 실행
@@ -100,7 +100,7 @@ sudo docker compose up -d --build
 ```
 
 ### 단계 5: 작동 확인
-브라우저 주소창에 `http://34.64.150.15` 를 입력하여 접속되는지 확인합니다.
+브라우저 주소창에 `http://robinrag.duckdns.org` 를 입력하여 접속되는지 확인합니다.
 
 ## 5. 유지보수 및 모니터링
 -   **로그 확인**: `sudo docker compose logs -f`
