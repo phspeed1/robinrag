@@ -51,3 +51,7 @@ services:
       - ./llm_service/.env
     restart: always
     # Ports removed (internal access only via nginx)
+
+networks:
+  default:
+    name: robinrag_network
