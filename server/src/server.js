@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const passport = require('passport');
 const session = require('express-session');
 const cron = require('node-cron');
+const axios = require('axios');
 const { PrismaClient } = require('@prisma/client');
 require('./passport'); // Import Passport Config
 
@@ -46,15 +47,31 @@ const authRoutes = require('./auth');
 app.use('/auth', authRoutes);
 
 // Supabase Keep-Alive Cron Job (Runs every day at midnight)
-cron.schedule('0 0 * * *', async () => {
-    try {
-        console.log('Running Supabase Keep-Alive...');
-        await prisma.$queryRaw`SELECT 1`;
-        console.log('Supabase Keep-Alive successful');
+cron.schedule('0 */6 * * *', async () => {
+try {
+        console.log('Running Supabase REST API Keep-Alive...');
+        
+        // Supabase 프로젝트 URL에서 REST 주소 추출 (DATABASE_URL을 기반으로 유추하거나 process.env에 주입)
+        // 예: https://your-project-id.supabase.co/rest/v1/
+        const supabaseUrl = process.env.SUPABASE_URL; 
+        const supabaseKey = process.env.SUPABASE_KEY;
+
+        if (supabaseUrl && supabaseKey) {
+            await axios.get(`${supabaseUrl}/rest/v1/`, {
+                headers: {
+                    'apikey': supabaseKey,
+                    'Authorization': `Bearer ${supabaseKey}`
+                }
+            });
+            console.log('Supabase REST API Keep-Alive successful');
+        } else {
+            // 변수가 없다면 기존 Prisma 방식으로 Fallback 처리
+            await prisma.$queryRaw`SELECT 1`;
+            console.log('Supabase DB Fallback Keep-Alive successful');
+        }
     } catch (error) {
-        console.error('Supabase Keep-Alive failed:', error);
-    }
-});
+        console.error('Supabase Keep-Alive failed:', error.message);
+    }});
 
 // Start Server
 app.listen(PORT, () => {
