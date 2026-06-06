@@ -61,3 +61,6 @@ supabase/functions/*/deno.lock
 
 # User temp
 user_temp/
+
+# Cert bot ssl
+certbot/
